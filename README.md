@@ -32,3 +32,7 @@ Sistema simples de gerenciamento de colaboradores.
 - Listagem com pesquisa por nome
 - Edição de colaboradores
 - Exclusão com confirmação
+
+ ## Docker
+
+O projeto pode ser executado via Docker utilizando o arquivo Dockerfile incluído.
