@@ -1,4 +1,4 @@
-# EPI System - Safety Track
+# EPI System - 👷 Safety Track
 
 Sistema simples de gerenciamento de colaboradores.
 
@@ -11,11 +11,9 @@ Sistema simples de gerenciamento de colaboradores.
    pip install django
    ```
 
-3. Navegue até o diretório do projeto:
-   ```
-   EPI-system-main
-   ```
+3. Navegue até o diretório do projeto.
 
+   
 4. Execute as migrações do banco de dados:
    ```
    python manage.py migrate
