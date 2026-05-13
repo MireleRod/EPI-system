@@ -3,39 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal - Gerenciamento de colaboradores</title>
-    <!-- Bootstrap CSS 😊 -->
+    <title>Cadastro de Equipamentos de EPI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style> 
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(145deg, #eef2f7 0%, #d9ece9 100%);
-        min-height: 75vh;
-        padding: 2rem 1.5rem;
-    }
-    h1 {
-        color: #343a40;
-        margin-bottom: 20px;
-    }
-    .table {
-        background-color: #ffffff;
-    }
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(145deg, #eef2f7 0%, #d9ece9 100%);
+            min-height: 75vh;
+            padding: 2rem 1.5rem;
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        .table {
+            background-color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1><i class="fas fa-hard-hat"></i> SafetyTrack - Painel administrativo</h1>
+        <h1><i class="fas fa-hard-hat"></i> Cadastro de Equipamentos de EPI</h1>
         <div class="mb-3">
             <a href="{% url 'menu_principal' %}" class="btn btn-secondary me-2">Voltar ao menu</a>
-            <a href="{% url 'criar' %}" class="btn btn-primary">Novo Colaborador</a>
+            <a href="{% url 'equipamentos_criar' %}" class="btn btn-primary">Novo Equipamento</a>
         </div>
         {% if messages %}
             {% for message in messages %}
@@ -47,7 +44,7 @@
         {% endif %}
         <form method="get" class="mb-3">
             <div class="input-group">
-                <input type="text" class="form-control" name="q" placeholder="Pesquisar por nome" value="{{ request.GET.q }}">
+                <input type="text" class="form-control" name="q" placeholder="Pesquisar por nome ou código" value="{{ request.GET.q }}">
                 <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
             </div>
         </form>
@@ -55,27 +52,31 @@
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>CPF</th>
-                    <th>Cargo</th>
-                    <th>Setor</th>
+                    <th>Código</th>
+                    <th>Tipo</th>
+                    <th>Classe de Risco</th>
+                    <th>Data de Aquisição</th>
+                    <th>Ativo</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                {% for colaborador in dados %}
+                {% for equipamento in dados %}
                 <tr>
-                    <td>{{ colaborador.nome }}</td>
-                    <td>{{ colaborador.cpf }}</td>
-                    <td>{{ colaborador.cargo }}</td>
-                    <td>{{ colaborador.setor }}</td>
+                    <td>{{ equipamento.nome }}</td>
+                    <td>{{ equipamento.codigo }}</td>
+                    <td>{{ equipamento.tipo }}</td>
+                    <td>{{ equipamento.classe_risco }}</td>
+                    <td>{{ equipamento.data_aquisicao|date:'d/m/Y' }}</td>
+                    <td>{{ equipamento.ativo|yesno:'Sim,Não' }}</td>
                     <td>
-                        <a href="{% url 'editar' colaborador.id %}" class="btn btn-warning btn-sm">Editar</a>
-                        <a href="{% url 'excluir' colaborador.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                        <a href="{% url 'equipamentos_editar' equipamento.id %}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="{% url 'equipamentos_excluir' equipamento.id %}" class="btn btn-danger btn-sm">Excluir</a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5" class="text-center">Nenhum colaborador encontrado.</td>
+                    <td colspan="7" class="text-center">Nenhum equipamento encontrado.</td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -9,6 +9,10 @@
 <body>
     <div class="container mt-5">
         <h1>Confirmar Exclusão</h1>
+        <div class="mb-3">
+            <a href="{% url 'menu_principal' %}" class="btn btn-secondary me-2">Voltar ao menu</a>
+            <a href="{% url 'lista' %}" class="btn btn-outline-secondary">Voltar à lista</a>
+        </div>
         <p>Tem certeza que deseja excluir o colaborador <strong>{{ obj.nome }}</strong>?</p>
         <form method="post">
             {% csrf_token %}
