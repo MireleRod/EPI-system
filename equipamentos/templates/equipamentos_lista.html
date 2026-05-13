@@ -18,6 +18,12 @@
             color: #343a40;
             margin-bottom: 20px;
         }
+        h2 {
+            color: #495057;
+            align-items: center;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
         .table {
             background-color: #ffffff;
         }
@@ -29,7 +35,8 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1><i class="fas fa-hard-hat"></i> Cadastro de Equipamentos de EPI</h1>
+        <h1><i class="fas fa-hard-hat"></i>SafetyTrack - Painel administrativo</h1>
+        <h2>Gerenciamento de Equipamentos</h2>
         <div class="mb-3">
             <a href="{% url 'menu_principal' %}" class="btn btn-secondary me-2">Voltar ao menu</a>
             <a href="{% url 'equipamentos_criar' %}" class="btn btn-primary">Novo Equipamento</a>
