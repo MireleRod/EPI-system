@@ -21,6 +21,11 @@
         color: #343a40;
         margin-bottom: 20px;
     }
+    h2 {
+        color: #495057;
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+    }
     .table {
         background-color: #ffffff;
     }
@@ -33,6 +38,7 @@
 <body>
     <div class="container mt-5">
         <h1><i class="fas fa-hard-hat"></i> SafetyTrack - Painel administrativo</h1>
+        <h2>Gerenciamento de Colaboradores</h2>
         <div class="mb-3">
             <a href="{% url 'menu_principal' %}" class="btn btn-secondary me-2">Voltar ao menu</a>
             <a href="{% url 'criar' %}" class="btn btn-primary">Novo Colaborador</a>
