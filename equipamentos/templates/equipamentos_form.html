@@ -55,11 +55,21 @@
             </div>
             <div class="mb-3">
                 <label for="data_aquisicao" class="form-label">Data de Aquisição</label>
-                <input type="date" class="form-control" id="data_aquisicao" name="data_aquisicao" value="{% if obj %}{{ obj.data_aquisicao }}{% endif %}">
+                <input type="date" class="form-control" id="data_aquisicao" name="data_aquisicao" value="{% if obj and obj.data_aquisicao %}{{ obj.data_aquisicao|date:'Y-m-d' }}{% endif %}">
             </div>
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="ativo" name="ativo" {% if obj and obj.ativo %}checked{% endif %}>
-                <label class="form-check-label" for="ativo">Ativo</label>
+            <div class="mb-3">
+                <label for="data_devo" class="form-label">Data de Devolução</label>
+                <input type="date" class="form-control" id="data_devo" name="data_devo" value="{% if obj and obj.data_devo %}{{ obj.data_devo|date:'Y-m-d' }}{% endif %}">
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status">
+                    <option value="fornecido" {% if obj %}{% if obj.status == 'fornecido' %}selected{% endif %}{% else %}selected{% endif %}>Fornecido</option>
+                    <option value="emprestado" {% if obj and obj.status == 'emprestado' %}selected{% endif %}>Emprestado</option>
+                    <option value="devolvido" {% if obj and obj.status == 'devolvido' %}selected{% endif %}>Devolvido</option>
+                    <option value="danificado" {% if obj and obj.status == 'danificado' %}selected{% endif %}>Danificado</option>
+                    <option value="perdido" {% if obj and obj.status == 'perdido' %}selected{% endif %}>Perdido</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">{% if obj %}Atualizar{% else %}Criar{% endif %}</button>
             <a href="{% url 'equipamentos_lista' %}" class="btn btn-secondary">Voltar</a>

@@ -63,7 +63,8 @@
                     <th>Tipo</th>
                     <th>Classe de Risco</th>
                     <th>Data de Aquisição</th>
-                    <th>Ativo</th>
+                    <th>Data de Devolução</th>
+                    <th>Status</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -75,7 +76,8 @@
                     <td>{{ equipamento.tipo }}</td>
                     <td>{{ equipamento.classe_risco }}</td>
                     <td>{{ equipamento.data_aquisicao|date:'d/m/Y' }}</td>
-                    <td>{{ equipamento.ativo|yesno:'Sim,Não' }}</td>
+                    <td>{{ equipamento.data_devo|date:'d/m/Y' }}</td>
+                    <td>{{ equipamento.get_status_display }}</td>
                     <td>
                         <a href="{% url 'equipamentos_editar' equipamento.id %}" class="btn btn-warning btn-sm">Editar</a>
                         <a href="{% url 'equipamentos_excluir' equipamento.id %}" class="btn btn-danger btn-sm">Excluir</a>

@@ -27,7 +27,8 @@ def criar_equipamento(request):
                 tipo=request.POST['tipo'],
                 classe_risco=request.POST['classe_risco'],
                 data_aquisicao=request.POST['data_aquisicao'] or None,
-                ativo=('ativo' in request.POST),
+                data_devo=request.POST['data_devo'] or None,
+                status=request.POST['status'],
             )
             messages.success(request, 'Equipamento criado com sucesso!')
         except Exception as e:
@@ -46,8 +47,11 @@ def editar_equipamento(request, id):
             obj.codigo = request.POST['codigo']
             obj.tipo = request.POST['tipo']
             obj.classe_risco = request.POST['classe_risco']
-            obj.data_aquisicao = request.POST['data_aquisicao'] or None
-            obj.ativo = ('ativo' in request.POST)
+            data_aquisicao = request.POST.get('data_aquisicao', '')
+            data_devo = request.POST.get('data_devo', '')
+            obj.data_aquisicao = data_aquisicao if data_aquisicao != '' else obj.data_aquisicao
+            obj.data_devo = data_devo if data_devo != '' else obj.data_devo
+            obj.status = request.POST['status']
             obj.save()
             messages.success(request, 'Equipamento atualizado com sucesso!')
             return redirect('equipamentos_editar', id=id)
