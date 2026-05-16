@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if obj %}Editar{% else %}Cadastrar{% endif %} Empréstimo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(145deg, #eef2f7 0%, #d9ece9 100%);
+            min-height: 75vh;
+            padding: 2rem 1.5rem;
+        }
+
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+    <h1>{% if obj %}Editar{% else %}Cadastrar{% endif %} Empréstimo</h1>
+
+    <div class="mb-3">
+        <a href="{% url 'menu_principal' %}" class="btn btn-secondary me-2">Voltar ao menu</a>
+        <a href="{% url 'emprestimos_lista' %}" class="btn btn-outline-secondary">Voltar à lista</a>
+    </div>
+
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card p-4">
+
+        <form method="post">
+            {% csrf_token %}
+
+            
+            <div class="mb-3">
+                <label>Colaborador</label>
+                <select name="colaborador" class="form-control" {% if obj %}disabled{% endif %}>
+                    {% for c in colaboradores %}
+                        <option value="{{ c.id }}" {% if obj and obj.colaborador.id == c.id %}selected{% endif %}>
+                            {{ c.nome }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                {% if obj %}
+                    <input type="hidden" name="colaborador" value="{{ obj.colaborador.id }}">
+                {% endif %}
+            </div>
+
+            
+            <div class="mb-3">
+                <label>Equipamento</label>
+                <select name="equipamento" class="form-control" {% if obj %}disabled{% endif %}>
+                    {% for e in equipamentos %}
+                        <option value="{{ e.id }}" {% if obj and obj.equipamento.id == e.id %}selected{% endif %}>
+                            {{ e.nome }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                {% if obj %}
+                    <input type="hidden" name="equipamento" value="{{ obj.equipamento.id }}">
+                {% endif %}
+            </div>
+
+            
+            <div class="mb-3">
+                <label>Data prevista devolução</label>
+                <input type="datetime-local"
+                       name="data_prevista_devolucao"
+                       class="form-control"
+                       value="{{ obj.data_prevista_devolucao|date:'Y-m-d\\TH:i' }}"
+                       {% if obj %}disabled{% endif %}>
+
+                {% if obj %}
+                    <input type="hidden"
+                           name="data_prevista_devolucao"
+                           value="{{ obj.data_prevista_devolucao|date:'Y-m-d\\TH:i' }}">
+                {% endif %}
+            </div>
+
+            
+            <div class="mb-3">
+                <label>Status</label>
+                <select class="form-control" name="status" id="status">
+
+                        {% for value, label in status_choices %}
+                            <option value="{{ value }}" {% if obj.status == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+
+                </select>
+            </div>
+
+            
+            <div id="devolucaoFields" style="display:none;">
+
+                <div class="mb-3">
+                    <label>Data efetiva devolução</label>
+                    <input type="datetime-local"
+                           name="data_devolucao"
+                           class="form-control"
+                           value="{{ obj.data_devolucao|date:'Y-m-d\\TH:i' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Observação devolução</label>
+                    <textarea name="observacao_devolucao" class="form-control">{{ obj.observacao_devolucao }}</textarea>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                {% if obj %}Atualizar{% else %}Criar{% endif %}
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const status = document.getElementById("status");
+    const box = document.getElementById("devolucaoFields");
+
+    function toggleFields() {
+        const value = status.value;
+
+        const show = (
+            value === "devolvido" ||
+            value === "danificado" ||
+            value === "perdido"
+        );
+
+        box.style.display = show ? "block" : "none";
+    }
+
+    status.addEventListener("change", toggleFields);
+    toggleFields();
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
